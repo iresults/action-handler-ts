@@ -1,10 +1,10 @@
 import {Component} from 'react';
 import {ActionHandlerInterface} from './ActionHandlerInterface';
 
-export class ActionHandler<R extends Component, S = {}, P= {}> implements ActionHandlerInterface<R, S, P> {
+export class ActionHandler<R extends Component<P, S>, S = {}, P = {}> implements ActionHandlerInterface<R, S, P> {
     private _root: R;
 
-    registerRoot(root: R) {
+    public registerRoot(root: R) {
         this._root = root;
     }
 
@@ -12,7 +12,15 @@ export class ActionHandler<R extends Component, S = {}, P= {}> implements Action
         return this._root;
     }
 
-    setState<K extends keyof S>(
+    get state(): Readonly<S> {
+        return this.root ? this.root.state : this.getInitialState();
+    }
+
+    public getInitialState(): S {
+        return {} as S;
+    }
+
+    public setState<K extends keyof S>(
         state: ((prevState: Readonly<S>, props: Readonly<P>) => (Pick<S, K> | S | null))
             | (Pick<S, K> | S | null),
         callback?: () => void

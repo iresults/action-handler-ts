@@ -9,11 +9,23 @@ export interface ActionHandlerInterface<R extends Component, S = {}, P = {}> {
     readonly root: R;
 
     /**
+     * Return the root component's state
+     */
+    readonly state: Readonly<S>;
+
+    /**
      * Register the instantiated root component to the handler
      *
      * @param {R} root
      */
     registerRoot(root: R): void;
+
+    /**
+     * Return the initial state
+     *
+     * @return {S}
+     */
+    getInitialState(): S;
 
     /**
      * Update the root component's state

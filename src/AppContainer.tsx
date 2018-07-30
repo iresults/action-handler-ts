@@ -55,7 +55,6 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
         let initializationProps = props;
         let root: R | null | Component<R, ComponentState>;
         const attachRenderedInstanceToRoot = (renderedElement: R): void => {
-            console.log('attachRenderedInstanceToRoot');
             root = renderedElement;
         };
 
@@ -66,14 +65,12 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
         }
 
         const afterRenderCallback = () => {
-            console.log('afterRenderCallback');
             if (root) {
                 this.initialize(root as R);
             }
         };
 
         const element = React.createElement(this._rootClass, initializationProps, null) as any;
-
         if (this._renderer) {
             this._renderer.render(element, container, afterRenderCallback);
         } else {
@@ -96,7 +93,6 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
      * @param {R} root
      */
     protected initialize(root: R) {
-        console.log('initialize');
         this._root = root;
         this._actionHandler.registerRoot(root);
     }
