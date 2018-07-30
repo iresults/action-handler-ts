@@ -23,10 +23,10 @@ class DummyApp extends Component<DummyProps> {
 
 describe('instantiation', () => {
     it('new should accept action handler class', () => {
-        const container = new AppContainer(DummyApp, ActionHandler);
+        const container = new AppContainer(ActionHandler);
 
         container.setRenderer(renderer as any);
-        container.run(buildElement());
+        container.render(DummyApp, buildElement());
 
         const result = renderer.getRenderOutput();
         expect(result.type).toBe('div');
@@ -34,10 +34,10 @@ describe('instantiation', () => {
     });
 
     it('new should accept action handler instance', () => {
-        const container = new AppContainer(DummyApp, new ActionHandler<DummyApp>());
+        const container = new AppContainer(new ActionHandler<DummyApp>());
 
         container.setRenderer(renderer as any);
-        container.run(buildElement());
+        container.render(DummyApp, buildElement());
 
         const result = renderer.getRenderOutput();
         expect(result.type).toBe('div');
@@ -60,20 +60,24 @@ describe('instantiation', () => {
     //         }
     //     }
     //
-    //     const container = new AppContainer(DummyApp, new DummyHandler(done));
+    //     const container = new AppContainer( new DummyHandler(done));
     //     container.setRenderer(renderer as any);
-    //     container.run(buildElement());
+    //     container.render(DummyApp, buildElement());
     // });
 });
 
 describe('render', () => {
     it('render should accept props', () => {
-        const container = new AppContainer(DummyApp, ActionHandler);
+        const container = new AppContainer(ActionHandler);
 
         container.setRenderer(renderer as any);
-        container.run(buildElement(), {
-            name: 'world'
-        });
+        container.render(
+            DummyApp,
+            buildElement(),
+            {
+                name: 'world'
+            }
+        );
 
         const result = renderer.getRenderOutput();
         expect(result.type).toBe('div');
@@ -83,7 +87,7 @@ describe('render', () => {
 
 describe('actionHandler', () => {
     it('new should instantiate the action handler', () => {
-        const container = new AppContainer(DummyApp, ActionHandler);
+        const container = new AppContainer(ActionHandler);
         expect(container.actionHandler).toBeInstanceOf(ActionHandler);
     });
 });

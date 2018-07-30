@@ -11,7 +11,6 @@ type PropsTypeInternal<T> = PropsType<T> & { ref: (c: T) => void };
 export class AppContainer<R extends Component, H extends ActionHandlerInterface<R>> {
     private _root: R;
     private readonly _actionHandler: H;
-    private readonly _rootClass: ClassArg<R>;
     private _renderer: RendererInterface<R>;
 
     /**
@@ -19,12 +18,10 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
      *
      * `handler` can be either a class or a Handler instance itself
      *
-     * @param {ClassArg<R extends React.Component>} root
      * @param {ClassArg<H extends ActionHandlerInterface<R>> | H} handler
      */
-    constructor(root: ComponentClass<R> | ClassArg<R>, handler: ClassArg<H> | H) {
+    constructor(handler: ClassArg<H> | H) {
         this._actionHandler = (typeof handler === 'function') ? new handler() : handler;
-        this._rootClass = root as ClassArg<R>;
     }
 
     /**
@@ -46,16 +43,17 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
     }
 
     /**
-     * Run the main application
+     * Render the main application
      *
+     * @param rootClass
      * @param {Element} container
      * @param {PropsType<R extends React.Component> | null} props
      */
-    public run(container: Element, props?: PropsType<R> | null) {
+    public render(rootClass: ComponentClass<R> | ClassArg<R>, container: Element, props?: PropsType<R> | null) {
         let initializationProps = props;
-        let root: R | null | Component<R, ComponentState>;
+        let rootElement: R | null | Component<R, ComponentState>;
         const attachRenderedInstanceToRoot = (renderedElement: R): void => {
-            root = renderedElement;
+            rootElement = renderedElement;
         };
 
         if (initializationProps) {
@@ -65,12 +63,12 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
         }
 
         const afterRenderCallback = () => {
-            if (root) {
-                this.initialize(root as R);
+            if (rootElement) {
+                this.initialize(rootElement as R);
             }
         };
 
-        const element = React.createElement(this._rootClass, initializationProps, null) as any;
+        const element = React.createElement(rootClass, initializationProps, null) as any;
         if (this._renderer) {
             this._renderer.render(element, container, afterRenderCallback);
         } else {
