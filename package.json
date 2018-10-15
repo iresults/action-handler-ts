@@ -2,7 +2,7 @@
     "name": "action-handler",
     "version": "0.1.0",
     "main": "build/dist/index.js",
-    "typings": "build/dist/index.d.ts",
+    "typings": "src/index.tsx",
     "license": "MIT",
     "dependencies": {
         "@types/react-test-renderer": "^16.0.1",
