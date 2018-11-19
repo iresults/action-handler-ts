@@ -1,13 +1,17 @@
-import {ActionHandler} from './ActionHandler';
-import {Component} from 'react';
+import { Component } from 'react';
+import { ActionHandler } from './ActionHandler';
 
+/* tslint:disable:no-empty-interface */
 interface DummyState {
 }
 
 class DummyComponent<S> {
+    public props: {};
+    public context: {};
+    public refs: {};
     private _state: S;
 
-    setState(newState: S) {
+    public setState(newState: S) {
         this._state = newState;
     }
 
@@ -15,15 +19,13 @@ class DummyComponent<S> {
         return this._state;
     }
 
-    forceUpdate() {
+    public forceUpdate() {
+        // noop
     }
 
-    render() {
+    public render() {
+        // noop
     }
-
-    props: {};
-    context: {};
-    refs: {};
 }
 
 describe('state', () => {

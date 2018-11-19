@@ -1,5 +1,5 @@
-import {Component} from 'react';
-import {ActionHandlerInterface} from './ActionHandlerInterface';
+import { Component } from 'react';
+import { ActionHandlerInterface } from './ActionHandlerInterface';
 
 export class ActionHandler<R extends Component<P, S>, S = {}, P = {}> implements ActionHandlerInterface<R, S, P> {
     private _root: R;

@@ -1,12 +1,10 @@
 import * as React from 'react';
-import {Component} from 'react';
-import {createRenderer} from 'react-test-renderer/shallow';
-import {AppContainer} from './AppContainer';
-import {ActionHandler} from './ActionHandler';
+import { Component } from 'react';
+import { createRenderer } from 'react-test-renderer/shallow';
+import { ActionHandler } from './ActionHandler';
+import { AppContainer } from './AppContainer';
 
-const buildElement = function () {
-    return (typeof document !== 'undefined') ? document.createElement('div') : ({} as Element);
-};
+const buildElement = () => (typeof document !== 'undefined') ? document.createElement('div') : ({} as Element);
 const renderer = createRenderer();
 
 interface DummyProps {
@@ -14,7 +12,7 @@ interface DummyProps {
 }
 
 class DummyApp extends Component<DummyProps> {
-    render() {
+    public render() {
         const text = 'hello' + (this.props.name ? ' ' + this.props.name : '');
 
         return <div><h1>{text}</h1></div>;

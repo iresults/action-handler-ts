@@ -1,10 +1,12 @@
-import * as ReactDOM from 'react-dom';
 import * as React from 'react';
-import {ClassAttributes, Component, ComponentClass, ComponentState} from 'react';
-import {ActionHandlerInterface} from './ActionHandlerInterface';
+import { ClassAttributes, Component, ComponentClass, ComponentState } from 'react';
+import * as ReactDOM from 'react-dom';
+import { ActionHandlerInterface } from './ActionHandlerInterface';
 
-export type RendererInterface<R> = { render: (c: R, ...args: any[]) => {} };
-export type ClassArg<T> = { new(...args: any[]): T };
+export interface RendererInterface<R> {render: (c: R, ...args: any[]) => {}}
+
+export interface ClassArg<T> {new(...args: any[]): T}
+
 export type PropsType<T> = ClassAttributes<T> | {};
 type PropsTypeInternal<T> = PropsType<T> & { ref: (c: T) => void };
 
