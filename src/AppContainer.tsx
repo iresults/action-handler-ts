@@ -51,7 +51,7 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
      * @param {Element} container
      * @param {PropsType<R extends React.Component> | null} props
      */
-    public render(rootClass: ComponentClass<R> | ClassArg<R>, container: Element, props?: PropsType<R> | null) {
+    public render(rootClass: ComponentClass<R, any> | ClassArg<R>, container: Element, props?: PropsType<R> | null) {
         let initializationProps = props;
         let rootElement: R | null | Component<R, ComponentState>;
         const attachRenderedInstanceToRoot = (renderedElement: R): void => {
@@ -70,7 +70,7 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
             }
         };
 
-        const element = React.createElement(rootClass, initializationProps, null) as any;
+        const element = React.createElement(rootClass as any, initializationProps, null) as any;
         if (this._renderer) {
             this._renderer.render(element, container, afterRenderCallback);
         } else {
