@@ -1,0 +1,12 @@
+{
+    "name": "iresults/action-handler-ts",
+    "description": "Action Handler",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Daniel Corn",
+            "email": "cod@iresults.li"
+        }
+    ],
+    "require": {}
+}
