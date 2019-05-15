@@ -5,15 +5,15 @@ import { ActionHandlerInterface } from './ActionHandlerInterface';
 
 export interface RendererInterface<R> {render: (c: R, ...args: any[]) => {}}
 
-export interface ClassArg<T> {new(...args: any[]): T}
+export type ClassArg<T> = new(...args: any[]) => T
 
 export type PropsType<T> = ClassAttributes<T> | {};
 type PropsTypeInternal<T> = PropsType<T> & { ref: (c: T) => void };
 
 export class AppContainer<R extends Component, H extends ActionHandlerInterface<R>> {
-    private _root: R;
+    private _root?: R;
     private readonly _actionHandler: H;
-    private _renderer: RendererInterface<R>;
+    private _renderer?: RendererInterface<R>;
 
     /**
      * Create a new App Container instance for the given Root component and Handler
@@ -31,7 +31,10 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
      *
      * @return {R}
      */
-    get root(): R {
+    get root(): R | undefined {
+        if (!this._root) {
+            throw new ReferenceError('Root element is not assigned yet');
+        }
         return this._root;
     }
 

@@ -2,16 +2,13 @@ import { Component } from 'react';
 import { ActionHandlerInterface } from './ActionHandlerInterface';
 
 export class ActionHandler<R extends Component<P, S>, S = {}, P = {}> implements ActionHandlerInterface<R, S, P> {
-    private _root: R | null = null;
+    private _root?: R;
 
     public registerRoot(root: R) {
         this._root = root;
     }
 
-    get root(): R {
-        if (!this._root) {
-            throw new ReferenceError('Root element is not assigned yet');
-        }
+    get root(): R | undefined {
         return this._root;
     }
 
@@ -28,6 +25,10 @@ export class ActionHandler<R extends Component<P, S>, S = {}, P = {}> implements
             | (Pick<S, K> | S | null),
         callback?: () => void
     ): void {
-        this.root.setState(state, callback);
+        const root = this._root;
+        if (!root) {
+            throw new ReferenceError('Root element is not assigned yet');
+        }
+        root.setState(state, callback);
     }
 }

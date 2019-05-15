@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import { Component } from 'react';
 
 export interface ActionHandlerInterface<R extends Component, S = {}, P = {}> {
     /**
@@ -6,7 +6,7 @@ export interface ActionHandlerInterface<R extends Component, S = {}, P = {}> {
      *
      * @return {R}
      */
-    readonly root: R;
+    readonly root: R | undefined;
 
     /**
      * Return the root component's state
