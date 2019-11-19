@@ -6,10 +6,10 @@ interface DummyState {
 }
 
 class DummyComponent<S> {
-    public props: {};
-    public context: {};
-    public refs: {};
-    private _state: S;
+    public props: {} = {};
+    public context: {} = {};
+    public refs: {} = {};
+    private _state!: S;
 
     public setState(newState: S) {
         this._state = newState;

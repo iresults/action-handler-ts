@@ -8,7 +8,6 @@
       "dom"
     ],
     "sourceMap": true,
-    //    "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": "src",
@@ -21,7 +20,15 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "baseUrl": ".",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "isolatedModules": true
   },
   "exclude": [
     "node_modules",
@@ -30,5 +37,8 @@
     "acceptance-tests",
     "webpack",
     "jest"
+  ],
+  "include": [
+    "src"
   ]
 }
