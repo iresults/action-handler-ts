@@ -1,16 +1,26 @@
-import * as React from 'react';
-import { ClassAttributes, Component, ComponentClass, ComponentState } from 'react';
-import * as ReactDOM from 'react-dom';
-import { ActionHandlerInterface } from './ActionHandlerInterface';
+import * as React from "react";
+import {
+    ClassAttributes,
+    Component,
+    ComponentClass,
+    ComponentState,
+} from "react";
+import * as ReactDOM from "react-dom";
+import { ActionHandlerInterface } from "./ActionHandlerInterface";
 
-export interface RendererInterface<R> {render: (c: R, ...args: any[]) => {}}
+export interface RendererInterface<R> {
+    render: (c: R, ...args: any[]) => {};
+}
 
-export type ClassArg<T> = new(...args: any[]) => T
+export type ClassArg<T> = new (...args: any[]) => T;
 
 export type PropsType<T> = ClassAttributes<T> | {};
 type PropsTypeInternal<T> = PropsType<T> & { ref: (c: T) => void };
 
-export class AppContainer<R extends Component, H extends ActionHandlerInterface<R>> {
+export class AppContainer<
+    R extends Component,
+    H extends ActionHandlerInterface<R>,
+> {
     private _root?: R;
     private readonly _actionHandler: H;
     private _renderer?: RendererInterface<R>;
@@ -23,7 +33,8 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
      * @param {ClassArg<H extends ActionHandlerInterface<R>> | H} handler
      */
     constructor(handler: ClassArg<H> | H) {
-        this._actionHandler = (typeof handler === 'function') ? new handler() : handler;
+        this._actionHandler =
+            typeof handler === "function" ? new handler() : handler;
     }
 
     /**
@@ -33,7 +44,7 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
      */
     get root(): R | undefined {
         if (!this._root) {
-            throw new ReferenceError('Root element is not assigned yet');
+            throw new ReferenceError("Root element is not assigned yet");
         }
         return this._root;
     }
@@ -54,7 +65,11 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
      * @param {Element} container
      * @param {PropsType<R extends React.Component> | null} props
      */
-    public render(rootClass: ComponentClass<R, any> | ClassArg<R>, container: Element, props?: PropsType<R> | null) {
+    public render(
+        rootClass: ComponentClass<R, any> | ClassArg<R>,
+        container: Element,
+        props?: PropsType<R> | null,
+    ) {
         let initializationProps = props;
         let rootElement: R | null | Component<R, ComponentState>;
         const attachRenderedInstanceToRoot = (renderedElement: R): void => {
@@ -62,9 +77,10 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
         };
 
         if (initializationProps) {
-            (initializationProps as PropsTypeInternal<R>).ref = attachRenderedInstanceToRoot;
+            (initializationProps as PropsTypeInternal<R>).ref =
+                attachRenderedInstanceToRoot;
         } else {
-            initializationProps = {ref: attachRenderedInstanceToRoot} as any;
+            initializationProps = { ref: attachRenderedInstanceToRoot } as any;
         }
 
         const afterRenderCallback = () => {
@@ -73,7 +89,11 @@ export class AppContainer<R extends Component, H extends ActionHandlerInterface<
             }
         };
 
-        const element = React.createElement(rootClass as any, initializationProps, null) as any;
+        const element = React.createElement(
+            rootClass as any,
+            initializationProps,
+            null,
+        ) as any;
         if (this._renderer) {
             this._renderer.render(element, container, afterRenderCallback);
         } else {

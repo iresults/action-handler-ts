@@ -1,9 +1,8 @@
-import { Component } from 'react';
-import { ActionHandler } from './ActionHandler';
+import { Component } from "react";
+import { ActionHandler } from "./ActionHandler";
 
 /* tslint:disable:no-empty-interface */
-interface DummyState {
-}
+interface DummyState {}
 
 class DummyComponent<S> {
     public props: {} = {};
@@ -28,18 +27,18 @@ class DummyComponent<S> {
     }
 }
 
-describe('state', () => {
-    it('should return the initial state', () => {
-        const handler = new ActionHandler;
+describe("state", () => {
+    it("should return the initial state", () => {
+        const handler = new ActionHandler();
 
         expect(handler.state).toEqual(handler.getInitialState());
     });
 
-    it('should return the root element state', () => {
-        const handler = new ActionHandler;
+    it("should return the root element state", () => {
+        const handler = new ActionHandler();
         handler.registerRoot(new DummyComponent<DummyState>() as Component);
 
-        handler.setState({newValue: 1});
-        expect(handler.state).toEqual({newValue: 1});
+        handler.setState({ newValue: 1 });
+        expect(handler.state).toEqual({ newValue: 1 });
     });
 });

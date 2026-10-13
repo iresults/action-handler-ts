@@ -1,10 +1,13 @@
-import * as React from 'react';
-import { Component } from 'react';
-import { createRenderer } from 'react-test-renderer/shallow';
-import { ActionHandler } from './ActionHandler';
-import { AppContainer } from './AppContainer';
+import * as React from "react";
+import { Component } from "react";
+import { createRenderer } from "react-test-renderer/shallow";
+import { ActionHandler } from "./ActionHandler";
+import { AppContainer } from "./AppContainer";
 
-const buildElement = () => (typeof document !== 'undefined') ? document.createElement('div') : ({} as Element);
+const buildElement = () =>
+    typeof document !== "undefined"
+        ? document.createElement("div")
+        : ({} as Element);
 const renderer = createRenderer();
 
 interface DummyProps {
@@ -13,32 +16,36 @@ interface DummyProps {
 
 class DummyApp extends Component<DummyProps> {
     public render() {
-        const text = 'hello' + (this.props.name ? ' ' + this.props.name : '');
+        const text = "hello" + (this.props.name ? " " + this.props.name : "");
 
-        return <div><h1>{text}</h1></div>;
+        return (
+            <div>
+                <h1>{text}</h1>
+            </div>
+        );
     }
 }
 
-describe('instantiation', () => {
-    it('new should accept action handler class', () => {
+describe("instantiation", () => {
+    it("new should accept action handler class", () => {
         const container = new AppContainer(ActionHandler);
 
         container.setRenderer(renderer as any);
         container.render(DummyApp, buildElement());
 
         const result = renderer.getRenderOutput();
-        expect(result.type).toBe('div');
+        expect(result.type).toBe("div");
         expect(result.props.children).toEqual(<h1>hello</h1>);
     });
 
-    it('new should accept action handler instance', () => {
+    it("new should accept action handler instance", () => {
         const container = new AppContainer(new ActionHandler<DummyApp>());
 
         container.setRenderer(renderer as any);
         container.render(DummyApp, buildElement());
 
         const result = renderer.getRenderOutput();
-        expect(result.type).toBe('div');
+        expect(result.type).toBe("div");
         expect(result.props.children).toEqual(<h1>hello</h1>);
     });
 
@@ -64,27 +71,23 @@ describe('instantiation', () => {
     // });
 });
 
-describe('render', () => {
-    it('render should accept props', () => {
+describe("render", () => {
+    it("render should accept props", () => {
         const container = new AppContainer(ActionHandler);
 
         container.setRenderer(renderer as any);
-        container.render(
-            DummyApp,
-            buildElement(),
-            {
-                name: 'world'
-            }
-        );
+        container.render(DummyApp, buildElement(), {
+            name: "world",
+        });
 
         const result = renderer.getRenderOutput();
-        expect(result.type).toBe('div');
+        expect(result.type).toBe("div");
         expect(result.props.children).toEqual(<h1>hello world</h1>);
     });
 });
 
-describe('actionHandler', () => {
-    it('new should instantiate the action handler', () => {
+describe("actionHandler", () => {
+    it("new should instantiate the action handler", () => {
         const container = new AppContainer(ActionHandler);
         expect(container.actionHandler).toBeInstanceOf(ActionHandler);
     });

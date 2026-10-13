@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component } from "react";
 
 export interface ActionHandlerInterface<R extends Component, S = {}, P = {}> {
     /**
@@ -35,8 +35,12 @@ export interface ActionHandlerInterface<R extends Component, S = {}, P = {}> {
      * @param {() => void} callback
      */
     setState<K extends keyof S>(
-        state: ((prevState: Readonly<S>, props: Readonly<P>) => (Pick<S, K> | S | null))
+        state:
+            | ((
+                  prevState: Readonly<S>,
+                  props: Readonly<P>,
+              ) => Pick<S, K> | S | null)
             | (Pick<S, K> | S | null),
-        callback?: () => void
+        callback?: () => void,
     ): void;
 }

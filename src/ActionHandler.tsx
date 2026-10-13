@@ -1,7 +1,11 @@
-import { Component } from 'react';
-import { ActionHandlerInterface } from './ActionHandlerInterface';
+import { Component } from "react";
+import { ActionHandlerInterface } from "./ActionHandlerInterface";
 
-export class ActionHandler<R extends Component<P, S>, S = {}, P = {}> implements ActionHandlerInterface<R, S, P> {
+export class ActionHandler<
+    R extends Component<P, S>,
+    S = {},
+    P = {},
+> implements ActionHandlerInterface<R, S, P> {
     private _root?: R;
 
     public registerRoot(root: R) {
@@ -21,13 +25,17 @@ export class ActionHandler<R extends Component<P, S>, S = {}, P = {}> implements
     }
 
     public setState<K extends keyof S>(
-        state: ((prevState: Readonly<S>, props: Readonly<P>) => (Pick<S, K> | S | null))
+        state:
+            | ((
+                  prevState: Readonly<S>,
+                  props: Readonly<P>,
+              ) => Pick<S, K> | S | null)
             | (Pick<S, K> | S | null),
-        callback?: () => void
+        callback?: () => void,
     ): void {
         const root = this._root;
         if (!root) {
-            throw new ReferenceError('Root element is not assigned yet');
+            throw new ReferenceError("Root element is not assigned yet");
         }
         root.setState(state, callback);
     }
